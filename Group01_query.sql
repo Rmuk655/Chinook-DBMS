@@ -14,7 +14,7 @@ SELECT R.reports_to as Manager_Id, E.first_name || CHR(32) || E.last_name as Man
 -- Q2: Find the customer(s) who have purchased the maximum number of tracks. Print their id, name and total number of tracks they have purchased.
 
 SELECT 'Q2: Find the customer(s) who have purchased the maximum number of tracks. Print their id, name and total number of tracks they have purchased.' AS "Question 2";
-SELECT Customer_Id, First_Name || CHR(32) || Last_Name AS Customer_Name, num_tracks FROM (SELECT C.Customer_Id as Customer_Id, C.First_Name as First_Name, C.Last_Name as Last_Name, COUNT(T.Track_Id) as num_tracks FROM Customer C, Invoice I, Invoice_Line IL, Track T WHERE C.Customer_Id = I.Customer_Id AND I.Invoice_Id = IL.Invoice_Id AND IL.Track_Id = T.Track_Id GROUP BY C.Customer_Id, C.First_Name, C.Last_Name) AS cust_track WHERE num_tracks = (SELECT MAX(num_tracks) FROM cust_track);
+WITH cust_track AS (SELECT C.Customer_Id AS Customer_Id, C.First_Name AS First_Name, C.Last_Name AS Last_Name, COUNT(T.Track_Id) AS num_tracks FROM Customer C, Invoice I, Invoice_Line IL, Track T WHERE C.Customer_Id = I.Customer_Id AND I.Invoice_Id = IL.Invoice_Id AND IL.Track_Id = T.Track_Id GROUP BY C.Customer_Id, C.First_Name, C.Last_Name) SELECT Customer_Id, First_Name || CHR(32) || Last_Name AS Customer_Name, num_tracks FROM cust_track WHERE num_tracks = (SELECT MAX(num_tracks) FROM cust_track);
 
 -- Q3: Find countries that have the highest average invoice total. Print country name and average invoice total.
 

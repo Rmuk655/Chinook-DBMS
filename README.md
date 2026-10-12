@@ -46,6 +46,21 @@ Write SQL queries for the following using the Chinook database:
 
 ---
 
+## Run
+
+Requires PostgreSQL (`sudo apt install postgresql` on Debian / Ubuntu).
+
+```bash
+# load the database (the script creates and connects to a database named chinook)
+psql -U postgres -f chinook/Chinook_PostgreSql.sql
+# run the ten queries
+psql -U postgres -d chinook -f Group01_query.sql
+```
+
+`Group01_output.txt` holds a reference run.
+
+---
+
 ## Notes
 
 - Uses appropriate **joins, subqueries, grouping, and aggregation**.
